@@ -16,6 +16,28 @@ class TestCalcularPrecio(unittest.TestCase):
     
     '''FRONTERAS'''
     
+    def testFronteraA (self):
+        fechas1=[datetime(2015,4,25),datetime(2015,4,25,0,15)]
+        self.assertEqual(calcularPrecio(Tarifa(2**31,2**31),fechas1),Decimal(2**31/4))
+    
+    def testFueraRangoA (self): 
+        #Analiza el caso donde las tarifas son negativas
+        fechas1=[datetime(2015,4,25),datetime(2015,4,25,0,16)]
+        try:
+            calcularPrecio(Tarifa(-0.00001,0.0002),fechas1)
+        except: pass #Se levanta la excepcion (resultado esperado)
+        else: 
+            self.fail("Resultado inesperado")
+            
+    def testFueraRangoB (self): 
+        #Analiza el caso donde las tarifas son negativas
+        fechas1=[datetime(2015,4,25),datetime(2015,4,25,0,16)]
+        try:
+            calcularPrecio(Tarifa("a","b"),fechas1)
+        except: pass #Se levanta la excepcion (resultado esperado)
+        else: 
+            self.fail("Resultado inesperado")
+            
     #Tiempo de reserva: 14 minutos con 59 segundos
     def testCalcularPecioA(self):
         tiempo = [datetime(2015,1,1,8),datetime(2015,1,1,8,14,59)]
@@ -93,30 +115,6 @@ class TestCalcularPrecio(unittest.TestCase):
         precio1 = calcularPrecio(tarifa,tiempo1)
         precio2 = calcularPrecio(tarifa,tiempo2)
         self.assertFalse(tarifa.tasaDiaSemana == tarifa.tasaFinSemana or precio1 == precio2)
-        
-class TestCalcularPrecio(unittest.TestCase):
-
-    def testFronteraA (self):
-        fechas1=[datetime(2015,4,25),datetime(2015,4,25,0,15)]
-        self.assertEqual(calcularPrecio(Tarifa(2**31,2**31),fechas1),Decimal(2**31/4))
-    
-    def testFueraRangoA (self): 
-        #Analiza el caso donde las tarifas son negativas
-        fechas1=[datetime(2015,4,25),datetime(2015,4,25,0,16)]
-        try:
-            calcularPrecio(Tarifa(-0.00001,0.0002),fechas1)
-        except: pass #Se levanta la excepcion (resultado esperado)
-        else: 
-            self.fail("Resultado inesperado")
-            
-    def testFueraRangoB (self): 
-        #Analiza el caso donde las tarifas son negativas
-        fechas1=[datetime(2015,4,25),datetime(2015,4,25,0,16)]
-        try:
-            calcularPrecio(Tarifa("a","b"),fechas1)
-        except: pass #Se levanta la excepcion (resultado esperado)
-        else: 
-            self.fail("Resultado inesperado")
                    
     def testMaliciaA(self):
         #Probamos calcular la tarifa cruzando con un ano bisiesto
