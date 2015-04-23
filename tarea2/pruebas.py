@@ -16,15 +16,16 @@ class TestCalcularPrecio(unittest.TestCase):
     def testA (self):
         pass 
     
-    def testB (self):
-        t=Tarifa(100,120)
-        fechas=[datetime(2015,1,20,13),datetime(2015,1,20,13,14,59)]
+    def testB (self): #Analiza los casos fronteras
+        t1=Tarifa(100,-0.00000000000001)
+        fechas1=[datetime(2015,1,20,13),datetime(2015,1,20,13,14,59,59)]
+        
         """
         Prueba de Excepciones
         """
         try:
-            calcularPrecio(t,fechas)
-        except: pass
+            calcularPrecio(t1,fechas1)
+        except: self.assertTrue(True)
         else: 
             self.fail("Resultado inesperado")
             
