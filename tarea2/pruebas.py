@@ -21,10 +21,13 @@ class TestCalcularPrecio(unittest.TestCase):
         tiempo = [datetime(2015,1,1,8,0,0),datetime(2015,1,1,8,14,59)]
         tarifa = Tarifa(0,0)
         try:
-            calcularPrecio(t,fechas)
+            calcularPrecio(tarifa,tiempo)
         except: pass
         else: 
             self.fail("Resultado inesperado")
+            
+    '''Revisa el tiempo de reserva de 15 minutos'''
+  
             
 if __name__ == "__main__":
     unittest.main()
