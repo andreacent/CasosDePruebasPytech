@@ -57,9 +57,19 @@ class TestCalcularPrecio(unittest.TestCase):
             
     '''MALICIOSOS'''
             
+    #Letras como parametros de Tarifa
+    def testTarifaLetras(self):
+        tarifa = Tarifa("b",0)
+        tiempo = [datetime(2015,4,25),datetime(2015,4,25,1)]
+        try:
+            calcularPrecio(tarifa,tiempo)
+        except: pass
+        else: 
+            self.fail("Resultado inesperado")
+        
     #Tarifa de semana distinta a tarifa del fin de semana
     #Si las tarifas son distintas, los precios son distintos
-    def testTarifasDistintasA(self):
+    def testTarifasDistintas(self):
         tarifa = Tarifa(1,0) 
         
         #frontera entre viernes y sabado
