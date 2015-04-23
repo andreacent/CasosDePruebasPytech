@@ -4,12 +4,95 @@ Creado el 22/04/2015
 Equipo:Pytech
 Autores:
 Andrea Centeno 10-10138
-Jose Patiño 11-10745
+Jose Patino 11-10745
 Andrea Cutillas 11-11145
 '''
 
 import unittest
 from tarea2 import * 
+from datetime import datetime
+
+class TestCalcularPrecio(unittest.TestCase):
+    
+    '''FRONTERAS'''
+    
+    #Tiempo de reserva: 14 minutos con 59 segundos
+    def testCalcularPecioA(self):
+        tiempo = [datetime(2015,1,1,8),datetime(2015,1,1,8,14,59)]
+        tarifa = Tarifa(0,0)
+        try:
+            calcularPrecio(tarifa,tiempo)
+        except: pass
+        else: 
+            self.fail("Resultado inesperado")
+            
+    #Tiempo de reserva: 7 dias y un segundo
+    def testCalcularPecioC(self):
+        tiempo = [datetime(2015,1,10),datetime(2015,1,17,0,0,1)]
+        tarifa = Tarifa(0,0)
+        try:
+            calcularPrecio(tarifa,tiempo)
+        except: pass
+        else: 
+            self.fail("Resultado inesperado")
+            
+    #Tiempo de reserva de 15 minutos
+    def testCalcularPecioB(self):
+        tiempo = [datetime(2015,1,1,8),datetime(2015,1,1,9)]
+        tarifa = Tarifa(1,1)
+        try:
+            calcularPrecio(tarifa,tiempo)
+        except: 
+            self.fail("Resultado inesperado")
+            
+    #Tiempo de reserva: 7 dias
+    def testCalcularPecioD(self):
+        tiempo = [datetime(2015,1,10),datetime(2015,1,17)]
+        tarifa = Tarifa(1,1)
+        try:
+            calcularPrecio(tarifa,tiempo)
+        except: 
+            self.fail("Resultado inesperado")
+    
+    #Una hora y un minuto = a dos horas
+    '''    
+    def testHoraCompleta(self):
+        #una hora y un minuto
+        tiempo1 = [datetime(2015,1,10,1),datetime(2015,1,10,2,1)]
+        #dos horas
+        tiempo2 = [datetime(2015,1,10,1),datetime(2015,1,10,3)]
+        tarifa = Tarifa(1.3,1)
+        
+        self.assertEqual(calcularPrecio(tarifa,tiempo1), calcularPrecio(tarifa,tiempo2))
+    '''#Esta prueba causa error porque se cobra por minuto, no por hora.
+            
+            
+    '''MALICIOSOS'''
+            
+    #Letras como parametros de Tarifa
+    def testTarifaLetras(self):
+        tarifa = Tarifa("b",0)
+        tiempo = [datetime(2015,4,25),datetime(2015,4,25,1)]
+        try:
+            calcularPrecio(tarifa,tiempo)
+        except: pass
+        else: 
+            self.fail("Resultado inesperado")
+        
+    #Tarifa de semana distinta a tarifa del fin de semana
+    #Si las tarifas son distintas, los precios son distintos
+    def testTarifasDistintas(self):
+        tarifa = Tarifa(1,0) 
+        
+        #frontera entre viernes y sabado
+        #1 hora del dia viernes
+        tiempo1 = [datetime(2015,4,24,22,59,59),datetime(2015,4,24,23,59,59)]
+        #1 hora del dia sabado
+        tiempo2 = [datetime(2015,4,25),datetime(2015,4,25,1)]
+        
+        precio1 = calcularPrecio(tarifa,tiempo1)
+        precio2 = calcularPrecio(tarifa,tiempo2)
+        self.assertFalse(tarifa.tasaDiaSemana == tarifa.tasaFinSemana or precio1 == precio2)
         
 class TestCalcularPrecio(unittest.TestCase):
 
