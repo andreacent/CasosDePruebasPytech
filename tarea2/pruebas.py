@@ -58,12 +58,12 @@ class TestCalcularPrecio(unittest.TestCase):
     '''MALICIOSOS'''
             
     #Tarifa de semana distinta a tarifa del fin de semana
-    #evaluando la frontera del viernes con la del sabado
-    #despues de una hora, los precios son distintos
-    def testTarifasDistintas(self):
-        tarifa = Tarifa(2,0) 
+    #Si las tarifas son distintas, los precios son distintos
+    def testTarifasDistintasA(self):
+        tarifa = Tarifa(1,0) 
         
-        #1 hora antes del sabado
+        #frontera entre viernes y sabado
+        #1 hora del dia viernes
         tiempo1 = [datetime(2015,4,24,22,59,59),datetime(2015,4,24,23,59,59)]
         #1 hora del dia sabado
         tiempo2 = [datetime(2015,4,25),datetime(2015,4,25,1)]
@@ -71,6 +71,6 @@ class TestCalcularPrecio(unittest.TestCase):
         precio1 = calcularPrecio(tarifa,tiempo1)
         precio2 = calcularPrecio(tarifa,tiempo2)
         self.assertFalse(tarifa.tasaDiaSemana == tarifa.tasaFinSemana or precio1 == precio2)
-            
+        
 if __name__ == "__main__":
     unittest.main()
