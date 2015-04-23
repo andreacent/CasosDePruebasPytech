@@ -28,7 +28,7 @@ class TestCalcularPrecio(unittest.TestCase):
             
     #Tiempo de reserva de 15 minutos
     def testCalcularPecioB(self):
-        tiempo = [datetime(2015,1,1,8),datetime(2015,1,1,8,15)]
+        tiempo = [datetime(2015,1,1,8),datetime(2015,1,1,9)]
         tarifa = Tarifa(1,1)
         try:
             calcularPrecio(tarifa,tiempo)
@@ -36,7 +36,7 @@ class TestCalcularPrecio(unittest.TestCase):
             self.fail("Resultado inesperado")
             
     #Tiempo de reserva: 7 dias y un segundo
-    def testCalcularPecioA(self):
+    def testCalcularPecioC(self):
         tiempo = [datetime(2015,1,10),datetime(2015,1,17,0,0,1)]
         tarifa = Tarifa(0,0)
         try:
@@ -46,13 +46,31 @@ class TestCalcularPrecio(unittest.TestCase):
             self.fail("Resultado inesperado")
             
     #Tiempo de reserva: 7 dias
-    def testCalcularPecioB(self):
+    def testCalcularPecioD(self):
         tiempo = [datetime(2015,1,10),datetime(2015,1,17)]
         tarifa = Tarifa(1,1)
         try:
             calcularPrecio(tarifa,tiempo)
         except: 
             self.fail("Resultado inesperado")
+            
+            
+    '''MALICIOSOS'''
+            
+    #Tarifa de semana distinta a tarifa del fin de semana
+    #evaluando la frontera del viernes con la del sabado
+    #despues de una hora, los precios son distintos
+    def testTarifasDistintas(self):
+        tarifa = Tarifa(2,0) 
+        
+        #1 hora antes del sabado
+        tiempo1 = [datetime(2015,4,24,22,59,59),datetime(2015,4,24,23,59,59)]
+        #1 hora del dia sabado
+        tiempo2 = [datetime(2015,4,25),datetime(2015,4,25,1)]
+        
+        precio1 = calcularPrecio(tarifa,tiempo1)
+        precio2 = calcularPrecio(tarifa,tiempo2)
+        self.assertFalse(tarifa.tasaDiaSemana == tarifa.tasaFinSemana or precio1 == precio2)
             
 if __name__ == "__main__":
     unittest.main()
