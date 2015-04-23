@@ -7,7 +7,7 @@ Modificacion del codigo legado por FragantSoft.
 '''
 
 from decimal import Decimal
-from datetime import timedelta
+from datetime import timedelta,datetime
 
 # Maneja una tasa para los dias de semana y otra para los fines de semana. 
 class Tarifa(object):
