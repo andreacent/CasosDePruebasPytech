@@ -26,15 +26,6 @@ class TestCalcularPrecio(unittest.TestCase):
         else: 
             self.fail("Resultado inesperado")
             
-    #Tiempo de reserva de 15 minutos
-    def testCalcularPecioB(self):
-        tiempo = [datetime(2015,1,1,8),datetime(2015,1,1,9)]
-        tarifa = Tarifa(1,1)
-        try:
-            calcularPrecio(tarifa,tiempo)
-        except: 
-            self.fail("Resultado inesperado")
-            
     #Tiempo de reserva: 7 dias y un segundo
     def testCalcularPecioC(self):
         tiempo = [datetime(2015,1,10),datetime(2015,1,17,0,0,1)]
@@ -45,6 +36,15 @@ class TestCalcularPrecio(unittest.TestCase):
         else: 
             self.fail("Resultado inesperado")
             
+    #Tiempo de reserva de 15 minutos
+    def testCalcularPecioB(self):
+        tiempo = [datetime(2015,1,1,8),datetime(2015,1,1,9)]
+        tarifa = Tarifa(1,1)
+        try:
+            calcularPrecio(tarifa,tiempo)
+        except: 
+            self.fail("Resultado inesperado")
+            
     #Tiempo de reserva: 7 dias
     def testCalcularPecioD(self):
         tiempo = [datetime(2015,1,10),datetime(2015,1,17)]
@@ -53,6 +53,18 @@ class TestCalcularPrecio(unittest.TestCase):
             calcularPrecio(tarifa,tiempo)
         except: 
             self.fail("Resultado inesperado")
+    
+    #Una hora y un minuto = a dos horas
+    '''    
+    def testHoraCompleta(self):
+        #una hora y un minuto
+        tiempo1 = [datetime(2015,1,10,1),datetime(2015,1,10,2,1)]
+        #dos horas
+        tiempo2 = [datetime(2015,1,10,1),datetime(2015,1,10,3)]
+        tarifa = Tarifa(1.3,1)
+        
+        self.assertEqual(calcularPrecio(tarifa,tiempo1), calcularPrecio(tarifa,tiempo2))
+    '''#Esta prueba causa error porque se cobra por minuto, no por hora.
             
             
     '''MALICIOSOS'''
