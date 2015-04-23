@@ -12,10 +12,10 @@ import unittest
 from tarea2 import * 
         
 class TestCalcularPrecio(unittest.TestCase):
-    t1=Tarifa(1,1)
-    fechas1=[datetime(2015,4,25),datetime(2015,4,25,0,16)]
+
     def testFronteraA (self):
-        self.assertEqual(calcularPrecio(t1,fechas1),Decimal(2**31/4))
+        fechas1=[datetime(2015,4,25),datetime(2015,4,25,0,15)]
+        self.assertEqual(calcularPrecio(Tarifa(2**31,2**31),fechas1),Decimal(2**31/4))
     
     def testFueraRangoA (self): 
         #Analiza el caso donde las tarifas son negativas
@@ -28,7 +28,7 @@ class TestCalcularPrecio(unittest.TestCase):
             
            
     def testMaliciaA(self):
-        #Probamos calcular la tarifa cruzando con un año bisiesto
+        #Probamos calcular la tarifa cruzando con un ano bisiesto
         fechaBisiesta=[datetime(2016,2,28),datetime(2016,3,1)]
         self.assertEqual(calcularPrecio(Tarifa(1,1),fechaBisiesta),Decimal(48))
 
