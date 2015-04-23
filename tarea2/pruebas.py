@@ -21,7 +21,7 @@ class TestCalcularPrecio(unittest.TestCase):
         fechas1=[datetime(2015,1,20,13),datetime(2015,1,20,13,14,59,59)]
         
         """
-        Prueba de Excepciones 2
+        Prueba de Excepciones 23
         """ 
         try:
             calcularPrecio(t1,fechas1)
