@@ -12,14 +12,19 @@ import unittest
 from tarea2 import * 
 from datetime import datetime
 
-class Tester(unittest.TestCase):
+class TestCalcularPrecio(unittest.TestCase):
     
-    '''Revisa que el tiempo de reserva con un segundo antes de 15 minutos.'''
+    '''FRONTERAS'''
+    
+    '''Revisa el tiempo de reserva de 14:59 minutos'''
     def testDomTarifa(self):
-        tiempo = [datetime(year=2015,month=1,day=1,hour=8,minute=0,second=0),datetime(year=2015,month=1,day=1,hour=8,minute=14,second=59)]
+        tiempo = [datetime(2015,1,1,8,0,0),datetime(2015,1,1,8,14,59)]
         tarifa = Tarifa(0,0)
-        precio = calcularPrecio(tarifa,tiempo)
-        assert precio == 0.00
-    
+        try:
+            calcularPrecio(t,fechas)
+        except: pass
+        else: 
+            self.fail("Resultado inesperado")
+            
 if __name__ == "__main__":
     unittest.main()
